@@ -57,7 +57,7 @@ function App() {
 
 console.log(goal)
   return (
-    <main className="w-full min-w-[449px] h-screen">
+    <main className="min-w-[375px] w-screen h-screen">
       <header className="w-full p-3 flex items-center justify-between">
           <div className=" text-secondary">ToDO Ai</div>
           <div className="flex items-center justify-between gap-3">
