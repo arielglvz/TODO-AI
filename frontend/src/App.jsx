@@ -62,7 +62,7 @@ function App() {
 
 console.log(goal)
   return (
-    <main className="min-w-[375px] w-screen h-screen">
+    <main className="min-w-[375px] h-screen">
       <header className="w-full p-3 flex items-center justify-between">
           <div className=" text-secondary">ToDO Ai</div>
           <div className="flex items-center justify-between gap-3">
@@ -72,7 +72,7 @@ console.log(goal)
           </div>
       </header>
       <section>
-        <div className="p-3 h-full h-max overflow-auto">
+        <div className="p-3 h-full w-full">
           <div className="mb-3 py-3 mx-auto max-w-2xl">
             <h1 className="text-3xl text-center text-white">Go to Action Plan</h1>
             <p className="text-center text-secondary">Enter your goal, and we'll help you break it down into actionable steps.</p>
