@@ -28,6 +28,11 @@ function App() {
   const handleGoal = async () => {
     setIsLoading(true);
 
+    if(todos) {
+      toast.error('Please reset the action plan first.');
+      return;
+    }
+
     try {
       const result = await validateAndGenerateTodos(goal);
       
@@ -91,7 +96,7 @@ console.log(goal)
             </div>
           </Card>
           {/* Todo List */}
-          {isLoading && <Loading />}
+          {isLoading && todos.length === 0 ? <Loading /> : null}
           {todos.length > 0 && (
             <Card className="p-3 mx-auto max-w-2xl text-center rounded-xl overflow-hidden">
               <div className="p-5 w-full">
