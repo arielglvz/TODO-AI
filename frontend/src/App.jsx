@@ -28,10 +28,10 @@ function App() {
   const handleGoal = async () => {
     setIsLoading(true);
 
-    if(todos) {
-      toast.error('Please reset the action plan first.');
-      return;
-    }
+    // if(todos) {
+    //   toast.error('Please reset the action plan first.');
+    //   return;
+    // }
 
     try {
       const result = await validateAndGenerateTodos(goal);
