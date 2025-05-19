@@ -80,6 +80,11 @@ console.log(goal)
           <Card className="mb-3 p-3 mx-auto max-w-2xl text-center bg-bg-card rounded-3xl">
             <Input 
               onChange={(e)=>handleInput(e)}
+              onKeyDown={(e) => 
+                {if(e.key === "Enter") {
+                  handleGoal()
+                }}
+              }
               placeholder="Enter your goal (e.g., Learn to play the guitar)"
               maxLength={85} 
             />
@@ -118,7 +123,7 @@ console.log(goal)
                         onChange={() => handleToggle(id)}
                         className="h-5 w-5 accent-secondary cursor-pointer"
                       />
-                      <p className={`py-3 px-2 ${complete ? "line-through text-secondary opacity-50" : "text-white opacity-100"} text-left bg-secondary/20 rounded-xl transition-all duration-1000`}>{text}</p>
+                      <p className={`w-full py-3 px-2 ${complete ? "line-through text-secondary opacity-50" : "text-white opacity-100"} text-left bg-secondary/20 rounded-xl transition-all duration-1000`}>{text}</p>
                     </div>
                   ))}
                 </div>
