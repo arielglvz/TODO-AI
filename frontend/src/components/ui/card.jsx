@@ -6,7 +6,7 @@ const Card = forwardRef(
     <div 
       ref={ref}
       className={cn(
-        "relative border border-border-dark",
+        "relative border border-border-dark shadow",
         className // 🔹 Adds the `className` dynamically
       )}
       {...props} // 🔹 Spreads additional props
