@@ -10,7 +10,7 @@ const ProgressBar = ({todos}) => {
           style={{ width: `${percentage || 0}%`}}
         />
       </div>
-      <p className="text-secondary/70 text-right">{completed || 0} of {todos.length || 0} completed ({percentage || 0}%)</p>
+      <p className="text-secondary/70 text-right">{completed || 0} of {todos?.length || 0} completed ({percentage || 0}%)</p>
     </div>
   )
 }

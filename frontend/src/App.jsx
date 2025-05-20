@@ -1,11 +1,15 @@
 import { useState } from "react"
 import { Icon } from "@iconify/react"
-import { Card } from "./components/ui/card"
-import Input from "./components/ui/input";
-import ProgressBar from "./components/ui/progress";
 import { validateAndGenerateTodos, formatTodos } from "./services/gemini-service";
 import { toast, ToastContainer } from "react-toastify";
+import { Card } from "./components/ui/card"
+import Header from "./components/ui/header";
+import CardTitle from "./components/ui/card-title";
 import Loading from "./components/ui/laoding";
+import GoalInputCard from "./components/ui/goal-input";
+import TodoList from "./components/ui/todolist";
+import Footer from "./components/ui/footer";
+import CardHeader from "./components/ui/card-header";
 
 function App() {
   const [goal, setCurrentGoal] = useState('');
@@ -27,7 +31,7 @@ function App() {
 
   const handleGoal = async () => {
     setIsLoading(true);
-
+    
     try {
       const result = await validateAndGenerateTodos(goal);
       
@@ -59,75 +63,35 @@ function App() {
     }
   }
 
-
-console.log(goal)
   return (
     <main className="min-w-[375px]">
       <div className="h-dvh flex flex-col justify-between">
-        <header className="w-full h-2xl p-3 flex items-center justify-between">
-            <div className=" text-secondary">ToDO Ai</div>
-            <div className="flex items-center justify-between gap-3">
-              <Icon icon="material-symbols:account-circle-full" className="w-4.5 h-4.5 text-secondary hover:text-white transition-all duration-300 shadow cursor-pointer"/>
-              <Icon icon="material-symbols:help-rounded" className="w-5 h-5 text-secondary hover:text-white transition-all duration-300 shadow cursor-pointer"/>
-              <Icon icon="material-symbols:settings" className="w-5 h-5 text-secondary hover:text-white transition-all duration-300 shadow cursor-pointer"/>
-            </div>
-        </header>
+        <Header/>
         <section className="h-max">
           <div className="p-3 h-full w-full">
-            <div className="mb-3 py-3 mx-auto max-w-2xl">
-              <h1 className="text-3xl text-center text-white">Go to Action Plan</h1>
-              <p className="text-center text-secondary">Enter your goal, and we'll help you break it down into actionable steps.</p>
-            </div>
-            <Card className="mb-3 p-3 mx-auto max-w-2xl text-center bg-bg-card rounded-3xl">
-              <Input 
-                onChange={(e)=>handleInput(e)}
-                onKeyDown={(e) => 
-                  {if(e.key === "Enter") {
-                    handleGoal()
-                  }}
-                }
-                placeholder="Enter your goal (e.g., Learn to play the guitar)"
-                maxLength={85} 
-              />
-              <div className="w-full flex justify-end">
-                <div className="flex items-center gap-2">
-                  <div 
-                    onClick={handleGoal}
-                    className="py-1 px-2 w-max flex items-center gap-1 border border-border-dark bg-gray-800/30 hover:bg-gray-800 cursor-pointer rounded-xl transition-all duration-300 shadow"
-                  >
-                    <p className="text-secondary">Generate</p>
-                    <Icon icon="material-symbols:convert-to-text-outline-sharp" className="h-5 w-5 text-secondary"/>
-                  </div>
-                </div>
-              </div>
-            </Card>
-            {/* Todo List */}
+            <CardTitle 
+              title="Go to Action Plan"
+              subtitle="Enter your goal, and we'll help you break it down into actionable steps."
+            />
+            <GoalInputCard 
+              handleInput={handleInput} 
+              handleGoal={handleGoal} 
+              placeholder="Enter your goal (e.g., Learn to play the guitar)" 
+              maxLenght={85}
+            />
             {isLoading && todos.length === 0 ? <Loading /> : null}
             {todos.length > 0 && (
               <Card className="p-3 mx-auto max-w-2xl text-center rounded-xl overflow-hidden">
                 <div className="p-5 w-full">
-                  <div className="mb-2 flex items-center gap-2">
-                    <Icon icon="ri:todo-line" className="h-5 w-5 text-white" />
-                    <h2 className="text-white text-xl font-semibold leading-snug">Action Plan for :</h2>
-                  </div>
-                    <div className="mb-2">
-                      <p className="mb-2 text-left text-secondary capitalize">{goal}</p>
-                      <ProgressBar todos={todos} />
-                    </div>
-                  {/* List */}
-                  <div>
-                    {todos.map(({ id, text, complete }) => (
-                      <div key={id} className="my-2 flex items-center gap-2">
-                        <input 
-                          type="checkbox"
-                          checked={complete}
-                          onChange={() => handleToggle(id)}
-                          className="h-5 w-5 accent-secondary cursor-pointer"
-                        />
-                        <p className={`w-full py-3 px-2 ${complete ? "line-through text-secondary opacity-50" : "text-white opacity-100"} text-left bg-secondary/20 rounded-xl transition-all duration-1000`}>{text}</p>
-                      </div>
-                    ))}
-                  </div>
+                  <CardHeader goal={goal} todos={todos} />
+                  <TodoList 
+                    todos={todos} 
+                    handleToggle={handleToggle} 
+                    renderEmptyState={() => (
+                      <p className="text-secondary text-center">Nothing to do! Add your first task.</p>
+                    )}
+                    className="mt-5"
+                  />
                 </div>
                 <div className="mx-auto max-w-2xl flex items-center flex-wrap gap-2">
                   <div className="min-w-3xs w-max mx-auto px-4 py-2 text-center border border-border-dark rounded-full bg-grey-800 hover:bg-green-800 transition-all duration-300 shadow cursor-pointer">
@@ -144,9 +108,7 @@ console.log(goal)
             )}
           </div>  
         </section>
-        <footer className="w-full h-2xl p-3 flex items-center justify-center">
-          <p className="text-secondary">© 2025 Ariel Galvez. All rights reserved.</p>
-        </footer>
+        <Footer />
       </div>
       <ToastContainer />
     </main>
